@@ -50,14 +50,16 @@
 
 #define _STR(x) #x
 #define _XSTR(x) _STR(x)
-#define _PASTE(x,y) x##y
+
+#define _PASTE(x,y) x ## y
 #define _PASTE2(x,y) _PASTE(x,y)
 #ifdef IS_PY3K
-#define _MODULE_NAME _PASTE2(PyInit_,MODULE_NAME)
+#define _MODULE_NAME _PASTE2(PyInit_, MODULE_NAME)
 #else
 #define _MODULE_NAME _PASTE2(init,MODULE_NAME)
 #endif
 #define _MODULE_STRING _XSTR(MODULE_NAME)
+
 
 typedef struct 
 {
@@ -105,7 +107,7 @@ ALGdealloc(PyObject *ptr)
 	memset((char*)&(self->st), 0, sizeof(block_state));
 	self->mode = self->count = self->segment_size = 0;
 	PyObject_Del(ptr);
-}
+};
 
 
 
@@ -782,6 +784,7 @@ PyMODINIT_FUNC
 #else
 void
 #endif
+
 _MODULE_NAME (void)
 {
 	PyObject *m;

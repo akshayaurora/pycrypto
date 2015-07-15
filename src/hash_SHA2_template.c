@@ -87,7 +87,7 @@ static void sha_compress(hash_state * hs)
  * return 1 on success
  * return 0 if the length overflows
  */
-int add_length(hash_state *hs, sha2_word_t inc) {
+int PCFN(add_length)(hash_state *hs, sha2_word_t inc) {
     sha2_word_t overflow_detector;
     overflow_detector = hs->length_lower;
     hs->length_lower += inc;
@@ -118,7 +118,7 @@ static void sha_process(hash_state * hs, unsigned char *buf, int len)
         /* is a block full? */
         if (hs->curlen == BLOCK_SIZE) {
             sha_compress(hs);
-            add_length(hs, BLOCK_SIZE_BITS);
+            PCFN(add_length)(hs, BLOCK_SIZE_BITS);
             hs->curlen = 0;
         }
     }
@@ -129,7 +129,7 @@ static void sha_done(hash_state * hs, unsigned char *hash)
     int i;
 
     /* increase the length of the message */
-    add_length(hs, hs->curlen * 8);
+    PCFN(add_length)(hs, hs->curlen * 8);
 
     /* append the '1' bit */
     hs->buf[hs->curlen++] = 0x80;
